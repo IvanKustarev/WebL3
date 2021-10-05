@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DBWorker implements DBWorking {
     @Override
-    public void addValues(double x, double y, double r, boolean isCatch) {
+    public void addValues(Values values) {
 
     }
 

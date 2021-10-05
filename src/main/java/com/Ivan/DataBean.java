@@ -3,6 +3,9 @@ package com.Ivan;
 import com.Ivan.AreaChecker.AreaChecking;
 import com.Ivan.DBWork.DBWorking;
 
+import java.util.Date;
+import java.util.List;
+
 public class DataBean {
     private double x = 0;
     private double y = 0;
@@ -11,9 +14,13 @@ public class DataBean {
     private DBWorking dbWorker;
     private AreaChecking areaChecker;
 
-    public String doAction(){
-        boolean isCatch = areaChecker.checkArea(x, y, r);
-        return null;
+    public String doAction() {
+        Values values = new Values(x, y, r, new Date());
+        values.setCatch(areaChecker.checkArea(values));
+        List<Values> valuesList = dbWorker.getLastValues();
+        valuesList.add(values);
+        dbWorker.addValues(values);
+        return "true";
     }
 
     public double getX() {
