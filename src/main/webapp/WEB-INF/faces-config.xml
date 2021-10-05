@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                                  http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>toMain</from-outcome>
+            <to-view-id>/main.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>toStart</from-outcome>
+            <to-view-id>/start.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <managed-bean>
+        <managed-bean-name>dataBean</managed-bean-name>
+        <managed-bean-class>com.Ivan.DataBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        
+        <managed-property>
+            <property-name>dbWorker</property-name>
+            <property-class>com.Ivan.DBWork.DBWorker</property-class>
+            <value>#{dbWorker}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>areaChecker</property-name>
+            <property-class>com.Ivan.AreaChecker.AreaChecker</property-class>
+            <value>#{areaChecker}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>dbWorker</managed-bean-name>
+        <managed-bean-class>com.Ivan.DBWork.DBWorker</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>areaChecker</managed-bean-name>
+        <managed-bean-class>com.Ivan.AreaChecker.AreaChecker</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+  
+</faces-config>

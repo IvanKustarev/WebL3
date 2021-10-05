@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Ivan
+  Date: 03.10.2021
+  Time: 21:50
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>MainPage</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <h:commandButton id="X0" type="button">-5</h:commandButton>
+        <h:commandButton id="X1" type="button">-4</h:commandButton>
+        <h:commandButton id="X2" type="button">-3</h:commandButton>
+        <h:commandButton id="X3" type="button">-2</h:commandButton>
+        <h:commandButton id="X4" type="button">-1</h:commandButton>
+        <h:commandButton id="X5" type="button">0</h:commandButton>
+        <h:commandButton id="X6" type="button">1</h:commandButton>
+        <h:commandButton id="X7" type="button">2</h:commandButton>
+        <h:commandButton id="X8" type="button">3</h:commandButton>
+
+        <h:inputText id="Y" value="#{dataBean.y}"></h:inputText>
+
+        <p:spinner id="paymentamount" value="#{dataBean.r}" required="true"
+                   min="0.00" max="3.00" maxlength="8" stepFactor="0.10" >
+        </p:spinner>
+
+        <h:commandButton action="#{dataBean.doAction}" value="Проверить точку"></h:commandButton>
+        <h:commandButton action="toStart" value="На стартовую страницу"></h:commandButton>
+
+        <h:inputHidden value="#{dataBean.x}"></h:inputHidden>
+    </h:form>
+</h:body>
+
+</html>
