@@ -10,7 +10,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
     <title>MainPage</title>
@@ -28,17 +28,40 @@
         <h:commandButton id="X7" type="button">2</h:commandButton>
         <h:commandButton id="X8" type="button">3</h:commandButton>
 
-        <h:inputText id="Y" value="#{dataBean.y}"></h:inputText>
+        <h:inputText id="Y" value="#{managerBean.y}"/>
 
-        <p:spinner id="paymentamount" value="#{dataBean.r}" required="true"
+        <p:spinner value="#{managerBean.r}" required="true"
                    min="0.00" max="3.00" maxlength="8" stepFactor="0.10" >
         </p:spinner>
+        <h:outputText id="testErr" value="aaaaaaaaa"/>
+        <h:message for="testErr"/>
 
-        <h:commandButton action="#{dataBean.doAction}" value="Проверить точку"></h:commandButton>
-        <h:commandButton action="toStart" value="На стартовую страницу"></h:commandButton>
+        <h:commandButton action="#{managerBean.doAction}" value="Проверить точку"/>
+        <h:commandButton action="toStart" value="На стартовую страницу"/>
 
-        <h:inputHidden value="#{dataBean.x}"></h:inputHidden>
+        <h:inputHidden value="#{managerBean.x}"/>
     </h:form>
+
+    <h2><h:outputText value="Product List"/></h2>
+    <h:dataTable value="#{managerBean.valuesList}" var="p">
+        <h:column>
+            <f:facet name="header">X</f:facet>
+            <h:outputText value="#{p.x}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Y</f:facet>
+            <h:outputText value="#{p.y}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">R</f:facet>
+            <h:outputText value="#{p.r}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Catch</f:facet>
+            <h:outputText value="#{p.catch}"/>
+        </h:column>
+    </h:dataTable>
+
 </h:body>
 
 </html>

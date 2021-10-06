@@ -1,6 +1,6 @@
 package com.Ivan.AreaChecker;
 
-import com.Ivan.Values;
+import com.Ivan.Values.Values;
 
 public class AreaChecker implements AreaChecking{
     @Override

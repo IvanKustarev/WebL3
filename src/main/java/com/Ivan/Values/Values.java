@@ -1,4 +1,4 @@
-package com.Ivan;
+package com.Ivan.Values;
 
 import java.util.Date;
 

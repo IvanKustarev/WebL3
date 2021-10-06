@@ -7,10 +7,7 @@ import java.sql.SQLException;
 public class Connector {
     private Connection connection;
 
-    public Connector() throws SQLException {
-        connect();
-    }
-    private Connection connect() throws SQLException {
+    public Connection connect() throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (Exception e) {
@@ -22,9 +19,6 @@ public class Connector {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return connection;
-    }
-    public Connection getConnection() {
         return connection;
     }
 }

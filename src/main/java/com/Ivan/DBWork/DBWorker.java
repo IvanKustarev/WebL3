@@ -1,6 +1,6 @@
 package com.Ivan.DBWork;
 
-import com.Ivan.Values;
+import com.Ivan.Values.Values;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,12 +9,13 @@ import java.util.List;
 
 public class DBWorker implements DBWorking {
 
-    Connection connection;
+    private Connector connector = new Connector();
+    private Connection connection;
 
-    //здесь нужно что-то сделать с пробросом ошибки
-    public DBWorker() throws SQLException {
-        Connector connector = new Connector();
-        Connection connection = connector.getConnection();
+    public DBWorker() {
+        try {
+            connection = connector.connect();
+        } catch (SQLException throwables) { }
     }
 
     @Override
@@ -24,6 +25,20 @@ public class DBWorker implements DBWorking {
 
     @Override
     public List<Values> getLastValues() {
-        return null;
+        return new ArrayList<Values>();
+    }
+
+    @Override
+    public boolean supportConnection() {
+        if (connection != null) {
+            return true;
+        } else {
+            try {
+                connection = connector.connect();
+                return true;
+            } catch (SQLException throwables) {
+                return false;
+            }
+        }
     }
 }
