@@ -13,10 +13,6 @@
             <from-outcome>toStart</from-outcome>
             <to-view-id>/start.xhtml</to-view-id>
         </navigation-case>
-        <navigation-case>
-            <from-outcome>BDProblem</from-outcome>
-            <to-view-id>/start.xhtml</to-view-id>
-        </navigation-case>
     </navigation-rule>
 
     <managed-bean>
@@ -26,30 +22,40 @@
         
         <managed-property>
             <property-name>valuesManaging</property-name>
-            <property-class>com.Ivan.Values.ValuesManager</property-class>
-            <value>#{valuesManager}</value>
+            <property-class>com.Ivan.Values.ValuesManagerBean</property-class>
+            <value>#{valuesManagerBean}</value>
         </managed-property>
         <managed-property>
             <property-name>areaChecking</property-name>
-            <property-class>com.Ivan.AreaChecker.AreaChecker</property-class>
-            <value>#{areaChecker}</value>
+            <property-class>com.Ivan.AreaChecker.AreaCheckerBean</property-class>
+            <value>#{areaCheckerBean}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>valuesList</property-name>
+            <value>#{valuesManagerBean.valuesList}</value>
         </managed-property>
     </managed-bean>
 
     <managed-bean>
-        <managed-bean-name>dbWorker</managed-bean-name>
-        <managed-bean-class>com.Ivan.DBWork.DBWorker</managed-bean-class>
+        <managed-bean-name>dbWorkerBean</managed-bean-name>
+        <managed-bean-class>com.Ivan.DBWork.DBWorkerBean</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>areaChecker</managed-bean-name>
-        <managed-bean-class>com.Ivan.AreaChecker.AreaChecker</managed-bean-class>
+        <managed-bean-name>areaCheckerBean</managed-bean-name>
+        <managed-bean-class>com.Ivan.AreaChecker.AreaCheckerBean</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>valuesManager</managed-bean-name>
-        <managed-bean-class>com.Ivan.Values.ValuesManager</managed-bean-class>
+        <managed-bean-name>valuesManagerBean</managed-bean-name>
+        <managed-bean-class>com.Ivan.Values.ValuesManagerBean</managed-bean-class>
         <managed-bean-scope>application</managed-bean-scope>
+
+        <managed-property>
+            <property-name>dbWorking</property-name>
+            <property-class>com.Ivan.DBWork.DBWorkerBean</property-class>
+            <value>#{dbWorkerBean}</value>
+        </managed-property>
     </managed-bean>
   
 </faces-config>

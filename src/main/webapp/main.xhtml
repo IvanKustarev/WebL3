@@ -36,7 +36,9 @@
         <h:outputText id="testErr" value="aaaaaaaaa"/>
         <h:message for="testErr"/>
 
-        <h:commandButton action="#{managerBean.doAction}" value="Проверить точку"/>
+        <h:commandButton action="#{managerBean.doAction}" value="Проверить точку">
+            <f:ajax execute="@form" render="@all"/>
+        </h:commandButton>
         <h:commandButton action="toStart" value="На стартовую страницу"/>
 
         <h:inputHidden value="#{managerBean.x}"/>

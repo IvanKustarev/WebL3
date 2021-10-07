@@ -2,7 +2,7 @@ package com.Ivan.Values;
 
 import java.util.Date;
 
-public class Values {
+public class Values implements Comparable{
     private double x;
     private double y;
     private double r;
@@ -62,5 +62,16 @@ public class Values {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(this.createDate.getTime() < ((Values) o).getCreateDate().getTime()){
+            return 1;
+        }else if(this.createDate.getTime() > ((Values) o).getCreateDate().getTime()){
+            return -1;
+        }else {
+            return 0;
+        }
     }
 }
