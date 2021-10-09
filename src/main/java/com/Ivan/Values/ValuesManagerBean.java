@@ -8,26 +8,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class ValuesManagerBean implements ValuesManaging{
-
+public class ValuesManagerBean implements ValuesManaging {
     private List<Values> valuesList = Collections.synchronizedList(new ArrayList<>());
     private List<Values> notSynchronizedValues = Collections.synchronizedList(new ArrayList<>());
     private DBWorking dbWorking;
     private boolean successStartSynchronise;
 
     @PostConstruct
-    public void addLastRequests(){
-        try {
-            List<Values> lastValues = dbWorking.getLastValues();
-            valuesList.addAll(lastValues);
-            Collections.sort(valuesList);
-            successStartSynchronise = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Проблемы с подключением к БД!");
+    public void startLoading() {
+        addLastRequests();
+    }
+
+
+    public boolean addLastRequests() {
+        if (dbWorking.isConnectionValid()) {
+            try {
+                List<Values> lastValues = dbWorking.getLastValues();
+                valuesList.addAll(lastValues);
+                Collections.sort(valuesList);
+                successStartSynchronise = true;
+                return true;
+            } catch (Exception e) {
+                successStartSynchronise = false;
+                return false;
+            }
+        } else {
             successStartSynchronise = false;
+            return false;
         }
     }
 
@@ -35,48 +43,25 @@ public class ValuesManagerBean implements ValuesManaging{
     @Override
     public void addValue(Values values) {
         notSynchronizedValues.add(values);
-        if(synchronize()){
-            System.out.println("Объект успешно добавлен и сонхронизорован");
-        }else {
-            System.out.println("Проблемы с синхронизацией!");
-        }
     }
 
     @Override
     public List<Values> getAllValues() {
-        if(dbWorking.isConnectionValid()){
-            if(!successStartSynchronise){
-                addLastRequests();
-                successStartSynchronise = true;
+        List<Values> valuesList = new ArrayList<>(this.valuesList);
+        valuesList.addAll(notSynchronizedValues);
+        Collections.sort(valuesList);
+        return valuesList;
+    }
+
+    @Override
+    public synchronized boolean synchronize() {
+        if (dbWorking.isConnectionValid()) {
+            if (!successStartSynchronise) {
+                boolean success = addLastRequests();
+                if (success) {
+                    successStartSynchronise = true;
+                }
             }
-            boolean successSynch = synchronize();
-            List<Values> values = new ArrayList<>(valuesList);
-            Collections.sort(values);
-            return values;
-        }else {
-            System.out.println("Нет подключения к бд!");
-            List<Values> values = new ArrayList<>(valuesList);
-            values.addAll(notSynchronizedValues);
-            Collections.sort(values);
-            return values;
-        }
-    }
-
-    public DBWorking getDbWorking() {
-        return dbWorking;
-    }
-
-    public void setDbWorking(DBWorking dbWorking) {
-        this.dbWorking = dbWorking;
-    }
-
-    public boolean synchronize(){
-        if(dbWorking.isConnectionValid()) {
-            if(!successStartSynchronise){
-                addLastRequests();
-                successStartSynchronise = true;
-            }
-
             Iterator iterator = notSynchronizedValues.iterator();
             while (iterator.hasNext()) {
                 Values values = (Values) iterator.next();
@@ -90,9 +75,17 @@ public class ValuesManagerBean implements ValuesManaging{
                 }
             }
             return true;
-        }else {
+        } else {
             return false;
         }
+    }
+
+    public DBWorking getDbWorking() {
+        return dbWorking;
+    }
+
+    public void setDbWorking(DBWorking dbWorking) {
+        this.dbWorking = dbWorking;
     }
 
     public List<Values> getValuesList() {

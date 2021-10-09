@@ -57,5 +57,17 @@
             <value>#{dbWorkerBean}</value>
         </managed-property>
     </managed-bean>
+    <validator>
+        <validator-id>xValidator</validator-id>
+        <validator-class>com.Ivan.Validate.XvalueValidator</validator-class>
+    </validator>
+    <validator>
+        <validator-id>yValidator</validator-id>
+        <validator-class>com.Ivan.Validate.YvalueValidator</validator-class>
+    </validator>
+    <validator>
+        <validator-id>rValidator</validator-id>
+        <validator-class>com.Ivan.Validate.RvalueValidator</validator-class>
+    </validator>
   
 </faces-config>

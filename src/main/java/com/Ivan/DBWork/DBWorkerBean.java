@@ -25,7 +25,7 @@ public class DBWorkerBean implements DBWorking {
 
     @Override
     public void addValues(Values values) throws SQLException {
-        StringBuilder stringBuilder =  new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("INSERT INTO W3_Values (x,y,r,time) VALUES (");
         stringBuilder.append(values.getX());
         stringBuilder.append(",");
@@ -47,7 +47,7 @@ public class DBWorkerBean implements DBWorking {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM W3_VALUES");
         List<Values> valuesList = new ArrayList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             valuesList.add(new Values(resultSet.getDouble("X"), resultSet.getDouble("Y"), resultSet.getDouble("R"), new Date(resultSet.getLong("TIME"))));
         }
         return valuesList;
@@ -55,19 +55,18 @@ public class DBWorkerBean implements DBWorking {
 
     @Override
     public boolean isConnectionValid() {
-        if (connection != null) {
-            try {
-                return connection.isValid(0);
-            } catch (SQLException throwables) {
-                return false;
-            }
-        } else {
-            try {
+        try {
+            if (connection != null && connection.isValid(0)) {
+                return true;
+            } else {
+                if(connection != null) {
+                    connection.close();
+                }
                 connection = connector.connect();
                 return connection.isValid(0);
-            } catch (SQLException throwables) {
-                return false;
             }
+        } catch (SQLException throwables) {
+            return false;
         }
     }
 }

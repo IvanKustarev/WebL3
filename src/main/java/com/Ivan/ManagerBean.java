@@ -4,11 +4,16 @@ import com.Ivan.AreaChecker.AreaChecking;
 import com.Ivan.Values.Values;
 import com.Ivan.Values.ValuesManaging;
 
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import java.util.Date;
 import java.util.List;
 
 public class ManagerBean {
+
+    private UIComponent errWindow;
+
     private double x = 0;
     private double y = 0;
     private double r = 0;
@@ -21,9 +26,17 @@ public class ManagerBean {
     public String doAction() {
         resultValue = new Values(x, y, r, new Date());
         resultValue.setCatch(areaChecking.checkArea(resultValue));
-        valuesList = valuesManaging.getAllValues();
         valuesManaging.addValue(resultValue);
-        return "toMain";
+        return updateValuesList();
+    }
+
+    public String updateValuesList(){
+        boolean successSynchronize = valuesManaging.synchronize();
+        if(!successSynchronize){
+            FacesContext.getCurrentInstance().addMessage(errWindow.getClientId(), new FacesMessage("Синхронизация невозможна! Проверьте соединение с БД!"));
+        }
+        valuesList = valuesManaging.getAllValues();
+        return Returns.TO_MAIN.toString();
     }
 
     public double getX() {
@@ -80,5 +93,13 @@ public class ManagerBean {
 
     public void setResultValue(Values resultValue) {
         this.resultValue = resultValue;
+    }
+
+    public UIComponent getErrWindow() {
+        return errWindow;
+    }
+
+    public void setErrWindow(UIComponent errWindow) {
+        this.errWindow = errWindow;
     }
 }
