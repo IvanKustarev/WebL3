@@ -54,6 +54,18 @@ public class ValuesManagerBean implements ValuesManaging {
     }
 
     @Override
+    public boolean clearLastRequests() {
+        valuesList.clear();
+        notSynchronizedValues.clear();
+        try {
+            dbWorking.clearLastRequests();
+        } catch (SQLException throwables) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public synchronized boolean synchronize() {
         if (dbWorking.isConnectionValid()) {
             if (!successStartSynchronise) {

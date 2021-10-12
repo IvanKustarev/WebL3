@@ -69,4 +69,12 @@ public class DBWorkerBean implements DBWorking {
             return false;
         }
     }
+
+    @Override
+    public void clearLastRequests() throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("TRUNCATE TABLE W3_VALUES");
+        statement.close();
+        connection.commit();
+    }
 }

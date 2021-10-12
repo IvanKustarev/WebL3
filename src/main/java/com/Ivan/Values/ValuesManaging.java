@@ -6,4 +6,5 @@ public interface ValuesManaging {
     public boolean synchronize();
     public void addValue(Values values);
     public List<Values> getAllValues();
+    public boolean clearLastRequests();
 }

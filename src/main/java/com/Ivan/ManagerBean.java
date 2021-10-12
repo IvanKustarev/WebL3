@@ -16,7 +16,7 @@ public class ManagerBean {
 
     private double x = 0;
     private double y = 0;
-    private double r = 0;
+    private double r = 1.0d;
 
     private AreaChecking areaChecking;
     private ValuesManaging valuesManaging;
@@ -30,13 +30,23 @@ public class ManagerBean {
         return updateValuesList();
     }
 
-    public String updateValuesList(){
+    public String updateValuesList() {
         boolean successSynchronize = valuesManaging.synchronize();
-        if(!successSynchronize){
+        if (!successSynchronize) {
             FacesContext.getCurrentInstance().addMessage(errWindow.getClientId(), new FacesMessage("Синхронизация невозможна! Проверьте соединение с БД!"));
         }
         valuesList = valuesManaging.getAllValues();
         return Returns.TO_MAIN.toString();
+    }
+
+    public String clearLastRequests() {
+        valuesList.clear();
+        if (valuesManaging.clearLastRequests()) {
+            return Returns.TO_MAIN.toString();
+        } else {
+            FacesContext.getCurrentInstance().addMessage(errWindow.getClientId(), new FacesMessage("История очищена только на локальном устройстве! Проверьте соединение с БД!"));
+            return Returns.TO_MAIN.toString();
+        }
     }
 
     public double getX() {
