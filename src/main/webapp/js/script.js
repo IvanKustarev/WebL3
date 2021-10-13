@@ -23,6 +23,7 @@ createXButtonsListener = function () {
     for (let xCommandButton of xCommandButtons) {
         xCommandButton.addEventListener("mousedown", function (e) {
             setX(xCommandButton.value);
+            document.getElementById("xParameterTitle").innerText = "Параметр X = " + xCommandButton.value;
         })
     }
 }
@@ -32,18 +33,45 @@ drawArea = function () {
     let results = document.getElementsByClassName("result");
     let j = 0;
     let r = getR();
-    console.log(getR())
     for (let i = results.length / 4; i > 0; i--) {
         let x = results[j++].innerText;
         let y = results[j++].innerText;
         j++;
-        let got = results[j++];
+        if (results[j].innerText === "true") {
+            results[j].innerText = "Да";
+        } else {
+            results[j].innerText = "Нет";
+        }
+        j++;
+        let circle;
         circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-
         circle.setAttribute('cx', String(250 + (Math.round(x / r * 200 * 10) / 10)));
         circle.setAttribute('cy', String(250 - (Math.round(y / r * 200 * 10) / 10)));
         circle.setAttribute("r", "3")
-        circle.setAttribute("fill", "rgb(234,234,234)")
+
+        if (x > 0 && y > 0) {
+            circle.setAttribute("fill", "rgb(182,9,9)");
+        } else if (x <= 0 && y >= 0) {
+            if (Math.pow(Math.abs(x), 2) + Math.pow(Math.abs(y), 2) <= Math.pow(r / 2, 2)) {
+                circle.setAttribute("fill", "rgb(5,232,30)")
+            } else {
+                circle.setAttribute("fill", "rgb(182,9,9)");
+            }
+        } else if (x <= 0 && y <= 0) {
+            if (x >= -r / 2 && y >= -r) {
+                circle.setAttribute("fill", "rgb(5,232,30)")
+            } else {
+                circle.setAttribute("fill", "rgb(182,9,9)");
+            }
+        } else if (x >= 0 && y <= 0) {
+            if (x - r - y <= 0) {
+                circle.setAttribute("fill", "rgb(5,232,30)")
+            } else {
+                circle.setAttribute("fill", "rgb(182,9,9)");
+            }
+        } else {
+            circle.setAttribute("fill", "rgb(182,9,9)");
+        }
         swg.appendChild(circle);
     }
 }
@@ -59,6 +87,7 @@ addDotChecker = function () {
         x = Math.ceil(x * 1000) / 1000;
         y = Math.ceil(y * 1000) / 1000;
         setX(x);
+        document.getElementById("xParameterTitle").innerText = "Параметр X = " + x;
         setY(y);
         let checkButton = document.getElementById("checkButtonParent").children[0];
         if (validate()) {
@@ -68,8 +97,24 @@ addDotChecker = function () {
 }
 
 addDotChecker();
-drawArea();
 createXButtonsListener();
+
+// let timerId = setTimeout();
+// clearTimeout(timerId);
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+    while (getR() == null) {
+        await sleep(50);
+    }
+    drawArea();
+}
+
+demo();
+
 
 setXErr = function (xErrStr) {
     document.getElementById("xErr").innerText = xErrStr;
@@ -93,8 +138,10 @@ validateX = function (x) {
         return false;
     } else if (!(x >= -5 && x <= 3)) {
         setXErr("Значение должно быть в диапозоне [-5...3]");
+        return false;
     } else if (x.length > 17) {
         setXErr("Если это выскочило - значит кто-то решил сломать нас (в поле не может быть больше 17 символов)");
+        return false;
     } else {
         return true;
     }
@@ -102,12 +149,14 @@ validateX = function (x) {
 
 validateY = function (y) {
     if (isNaN(y)) {
-        setXErr("Должно быть выбрано число!")
+        setYErr("Должно быть выбрано число!")
         return false;
     } else if (!(y >= -3 && y <= 3)) {
-        setXErr("Значение должно быть в диапозоне [-3...3]");
+        setYErr("Значение должно быть в диапозоне [-3...3]");
+        return false;
     } else if (y.length > 17) {
-        setXErr("В поле не может быть больше 17 символов");
+        setYErr("В поле не может быть больше 17 символов");
+        return false;
     } else {
         return true;
     }
@@ -115,21 +164,22 @@ validateY = function (y) {
 
 validateR = function (r) {
     if (isNaN(r)) {
-        setXErr("Должно быть выбрано число!")
+        setRErr("Должно быть выбрано число!")
         return false;
     } else if (!(r > 0 && r <= 3)) {
-        setXErr("Значение должно быть в диапозоне (0...3)");
+        setRErr("Значение должно быть в диапозоне (0...3)");
+        return false;
     } else if (r.length > 17) {
-        setXErr("В поле не может быть больше 17 символов");
+        setRErr("В поле не может быть больше 17 символов");
+        return false;
     } else {
         return true;
     }
 }
 
 validate = function () {
-    clearLastErrs();
 
-    let res = true;
+    clearLastErrs();
 
     if (validateX(getX()) && validateY(getY()) && validateR(getR())) {
         return true;
@@ -141,8 +191,16 @@ validate = function () {
 
 let afterAjaxSuccess = function (data) {
     if (data.status == "success") {
+        let results = document.getElementsByClassName("result");
+        if (results[0] !== undefined) {
+            document.getElementById("xParameterTitle").innerText = "Параметр X = " + results[0].innerText;
+        }
         drawArea();
         createXButtonsListener();
         addDotChecker();
     }
 }
+
+
+// <p:spinner id="R" validator="rValidator" value="#{managerBean.r}" required="true"
+//            min="0" max="20" maxlength="8" stepFactor="0.1"/>

@@ -17,15 +17,15 @@
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
 </h:head>
 
-<h:body>
+<h:body styleClass="backgroundColor">
     <div id="mainDiv">
         <h:form>
-            <div id="errWindowDiv">
+            <div id="errWindowDiv" class="centering errColor bordering menuObjects">
                 <h:outputText id="errWindow" value="" binding="#{managerBean.errWindow}"/>
                 <h:message for="errWindow"/>
             </div>
 
-            <svg id="svgArea" width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"
+            <svg id="svgArea" class="bordering" width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"
                  xmlns:bx="https://boxy-svg.com">
                 <rect x="150" y="250" width="100" height="200" style="fill: rgb(115, 111, 250);"/>
                 <path style="fill: rgb(115, 111, 250);"
@@ -50,36 +50,37 @@
                       transform="matrix(0, 1, -1, 0, 387.15802, 113.173004)"/>
                 <rect x="235.827" y="132.158" width="2" height="10" style=""
                       transform="matrix(0, 1, -1, 0, 387.15802, 213.173004)"/>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="443.488" y="236.492">R
                 </text>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="348.212" y="228.553">R/2
                 </text>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="261.443" y="154.828">R/2
                 </text>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="260.877" y="55.015">R
                 </text>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="262.011" y="354.453">-R/2
                 </text>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="261.443" y="455.211">-R
                 </text>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="118.529" y="240.274">-R/2
                 </text>
-                <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
+                <text class="unselectable" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 15.9px;"
                       x="42.536" y="232.901">-R
                 </text>
                 <rect y="249.95" width="500" height="0.2" style="fill: rgb(216, 216, 216);"/>
                 <rect x="249.9" width="0.2" height="500" style="fill: rgb(216, 216, 216);"/>
             </svg>
 
-            <div id="xDiv">
-                <span>Параметр X</span>
+            <div id="xDiv" class="bordering centering standardColor menuObjects">
+                <span id="xParameterTitle" class="title">Параметр X</span>
+                <br/>
                 <h:commandButton id="X0" class="XcommandButton" type="button" value="-5"/>
                 <h:commandButton id="X1" class="XcommandButton" type="button" value="-4"/>
                 <h:commandButton id="X2" class="XcommandButton" type="button" value="-3"/>
@@ -89,46 +90,52 @@
                 <h:commandButton id="X6" class="XcommandButton" type="button" value="1"/>
                 <h:commandButton id="X7" class="XcommandButton" type="button" value="2"/>
                 <h:commandButton id="X8" class="XcommandButton" type="button" value="3"/>
-                <h:message for="X"/>
+                <div class="errColor">
+                    <h:message styleClass="errColor" for="X"/>
+                </div>
                 <div>
-                    <span id="xErr">
-                    </span>
+                    <span id="xErr"/>
                 </div>
             </div>
-            <div id="yDiv">
-                <span>Параметр Y</span>
+            <div id="yDiv" class="bordering centering standardColor menuObjects">
+                <span class="title">Параметр Y</span>
                 <div id="Yparent">
                     <h:inputText id="Y" validator="yValidator" value="#{managerBean.y}"/>
                 </div>
-                <h:message for="Y"/>
+                <h:message styleClass="errColor" for="Y"/>
                 <div>
-                    <span id="yErr">
-                    </span>
-                </div>
-            </div>
-            <div id="rDiv">
-                <span>Параметр R</span>
-                <div id="Rparent">
-                    <p:spinner id="R" validator="rValidator" value="#{managerBean.r}" required="true"
-                               min="0.00" max="3.00" maxlength="8" stepFactor="0.10">
-                    </p:spinner>
-                    <h:message for="R"/>
-                    <div>
-                        <span id="rErr">
-                        </span>
+                    <div class="errColor">
+                        <span id="yErr"/>
                     </div>
                 </div>
             </div>
-            <div id="buttonDiv">
+            <div id="rDiv" class="bordering centering standardColor menuObjects">
+                <span class="title">Параметр R</span>
+                <div id="Rparent">
+                    <p:spinner id="R" validator="rValidator" value="#{managerBean.r}"
+                               min="0.1" max="2.9" stepFactor="0.1"/>
+                    <h:message styleClass="errColor" for="R"/>
+                    <div>
+                        <div class="errColor">
+                            <span id="rErr"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="buttonDiv" class="bordering centering standardColor menuObjects">
                 <div id="checkButtonParent">
-                    <h:commandButton action="#{managerBean.doAction}" value="Проверить точку">
+                    <h:commandButton styleClass="buttons title" action="#{managerBean.doAction}" value="Проверить точку">
                         <f:ajax execute="@form" render="@all" onevent="afterAjaxSuccess"/>
                     </h:commandButton>
                 </div>
-                <h:commandButton action="toStart" value="На стартовую страницу"/>
-                <h:commandButton action="#{managerBean.clearLastRequests}" value="Очистить историю">
-                    <f:ajax execute="@form" render="@all" onevent="afterAjaxSuccess"/>
-                </h:commandButton>
+                <div>
+                    <h:commandButton styleClass="buttons title" action="toStart" value="На стартовую страницу"/>
+                </div>
+                <div>
+                    <h:commandButton styleClass="buttons title" action="#{managerBean.clearLastRequests}" value="Очистить историю">
+                        <f:ajax execute="@form" render="@all" onevent="afterAjaxSuccess"/>
+                    </h:commandButton>
+                </div>
             </div>
             <div id="hiddenDiv" style="visibility: hidden">
                 <div id="Xparent">
@@ -139,30 +146,30 @@
                 </h:commandButton>
             </div>
         </h:form>
-        <div id="requestsTableDiv">
-            <h2><h:outputText value="Список запросов"/></h2>
+        <div id="requestsTableDiv" class="centering menuObjects bordering">
+            <h2><h:outputText styleClass="title" value="Список запросов"/></h2>
             <h:dataTable value="#{managerBean.valuesList}" var="p">
                 <h:column>
                     <f:facet name="header">X</f:facet>
-                    <div class="result">
+                    <div class="result centering tableColon">
                         <h:outputText value="#{p.x}"/>
                     </div>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Y</f:facet>
-                    <div class="result">
+                    <div class="result centering tableColon">
                         <h:outputText value="#{p.y}"/>
                     </div>
                 </h:column>
                 <h:column>
                     <f:facet name="header">R</f:facet>
-                    <div class="result">
+                    <div class="result centering tableColon">
                         <h:outputText value="#{p.r}"/>
                     </div>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Catch</f:facet>
-                    <div class="result">
+                    <div class="result centering tableColon">
                         <h:outputText value="#{p.catch}"/>
                     </div>
                 </h:column>

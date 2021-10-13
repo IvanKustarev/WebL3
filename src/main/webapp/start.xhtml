@@ -10,20 +10,26 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-    <title>StartPage</title>
+    <title>W3</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
 </h:head>
 
-<h:body>
-    <h:outputLabel>Кустарев</h:outputLabel>
-    <h:form>
-    <h:commandButton action="toMain">На главную</h:commandButton>
+<h:body styleClass="backgroundColor centering">
+    <h:outputLabel styleClass="title centering">Кустарев Иван Павлович P3215</h:outputLabel>
+    <h:form styleClass="centering">
+        <div>
+            <h:commandButton action="toMain" styleClass="buttons centering title" value="На главную"/>
+        </div>
+        <h:outputLabel id="timer" styleClass="title centering" value="#{managerBean.time}"/>
+        <div id="restimeParent">
+            <h:commandButton action="#{managerBean.generateTime}" value="restime" style="visibility: hidden">
+                <f:ajax execute="@all" render="timer"/>
+            </h:commandButton>
+        </div>
     </h:form>
-    <h:commandButton>
-        asdasdad
-    </h:commandButton>
+    <script src="js/startScript.js"/>
 </h:body>
-
 </html>
