@@ -59,7 +59,7 @@ public class DBWorkerBean implements DBWorking {
             if (connection != null && connection.isValid(0)) {
                 return true;
             } else {
-                if(connection != null) {
+                if (connection != null) {
                     connection.close();
                 }
                 connection = connector.connect();

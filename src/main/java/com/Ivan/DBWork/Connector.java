@@ -13,7 +13,7 @@ public class Connector {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        connection = DriverManager.getConnection("jdbc:postgresql://localhost:8999/studs", "s309681", "yvr557");
+        connection = DriverManager.getConnection("jdbc:postgresql://localhost:8999/studs", "***", "***");
         try {
             connection.setAutoCommit(false);
         }catch (Exception e){
